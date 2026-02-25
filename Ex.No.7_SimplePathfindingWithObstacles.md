@@ -1,6 +1,6 @@
 # Ex.No: 7  Implementation of Simple Pathfinding with Obstacles
-### DATE:                                                                            
-### REGISTER NUMBER : 
+### DATE: 24/02/26                                                                           
+### REGISTER NUMBER : 212223240129
 ### AIM: 
 To write a program to pathfinding using AI navigation 
 ### Algorithm:
@@ -28,49 +28,48 @@ Go to: Inspector → Add Component → NavMeshObstacle and Check: ✅ "Carve"
 11. Run the program
 ```  
 ### Program:
+#### AIPathfinder
 ```
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 public class AIPathfinder : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Transform target; // Assign the target in the Inspector
+    public Transform target;
     private NavMeshAgent agent;
+
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(target.position);
+        if (target != null)
+        {
+            agent.SetDestination(target.position);
+        }
     }
 }
-#Moving Obstacle
-using System.Collections;
-using System.Collections.Generic;
+```
+#### Moving
+```
 using UnityEngine;
 
 public class Moving : MonoBehaviour
 {
-    // Start is called before the first frame update
     public float moveDistance = 3f;
     public float moveSpeed = 2f;
     private Vector3 startPos;
-void Start()
+
+    void Start()
     {
-    startPos = transform.position;
+        startPos = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-       float movement=Random.Range(-moveDistance / 14, moveDistance / 14);
+        float movement = Mathf.Sin(Time.time * moveSpeed) * moveDistance;
         transform.position = startPos + new Vector3(movement, 0, 0);
     }
 }
@@ -78,10 +77,13 @@ void Start()
 For smooth movement(optional)  -> use  
 float movement = Mathf.PingPong(Time.time * moveSpeed, moveDistance) - moveDistance / 2;
 transform.position = startPos + new Vector3(movement, 0, 0);
+
 ### Output:
 
+<img width="1919" height="1024" alt="image" src="https://github.com/user-attachments/assets/bff3ea68-7974-43cd-aab9-97ce9ad72dc7" />
 
 
+<img width="1919" height="990" alt="image" src="https://github.com/user-attachments/assets/cfe5aa86-6a5b-450c-9a83-298131682d39" />
 
 
 
