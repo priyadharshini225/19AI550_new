@@ -1,6 +1,6 @@
 # Ex.No: 5  Implementation of Steering behaviour-Pursue and Evade in Unity
-### DATE:                                                                            
-### REGISTER NUMBER : 
+### DATE: 13/02/26                                                                          
+### REGISTER NUMBER : 212223240129
 ### AIM: 
 To write a program to simulate the process of Pursue and Evade behavior in Unity using NavigationMeshAgent. 
 ### Algorithm:
@@ -40,8 +40,8 @@ public class Player_movement : MonoBehaviour
     public float speed;
     void Start()
     {
-        float xdir = Input.GetAxis("Horizontal") * speed;
-        float zdir = Input.GetAxis("Vertical") * speed;
+        float xdir = Input.GetAxis("horizontal") * speed;
+        float zdir = Input.GetAxis("vertical") * speed;
         transform.position=new Vector3(xdir,zdir);
     }
 
@@ -80,7 +80,7 @@ public class Evader : MonoBehaviour
 public class Pursuer: MonoBehaviour
 {
     // Start is called before the first frame update
-    public NavMeshAgent agent;
+    NavMeshAgent agent;
     public Transform target;
     public float speed;
     void Start()
@@ -92,7 +92,7 @@ public class Pursuer: MonoBehaviour
     {
        Vector3 targetvelocity=target.position-transform.position;
        Vector3 futurepos = transform.position + targetvelocity.normalized*speed;
-       agent.SetDestination(futurepos);
+       agent.SetDestination(target.position);
     } 
     // Update is called once per frame
     void Update()
@@ -108,13 +108,10 @@ public class Pursuer: MonoBehaviour
 ```
 ### Output:
 
+<img width="1918" height="1012" alt="image" src="https://github.com/user-attachments/assets/0ee25b0d-6149-41cc-aee9-f8cf217caeba" />
 
 
-
-
-
-
-
+<img width="1919" height="1025" alt="image" src="https://github.com/user-attachments/assets/72df73d4-2e46-4134-93b5-a361d83fbcf6" />
 
 ### Result:
 Thus the simple pursue and evade behavior was implemented successfully.
