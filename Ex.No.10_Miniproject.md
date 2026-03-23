@@ -20,39 +20,68 @@ To develop a game Simple 3D Maze Game in Unity.
 13. Stop the game.
 ```  
 ### Program:
+Playermovement.cs
 ```
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMoveSimple : MonoBehaviour
 {
     public float speed = 5f;
-    public float turnSpeed = 150f;
+    public float turnSpeed = 200f;
 
-    Rigidbody rb;
+    CharacterController controller;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        float move = Input.GetAxis("Vertical");
-        float turn = Input.GetAxis("Horizontal");
+        float move = 0f;
+        float turn = 0f;
 
-        // Rotate player
-        transform.Rotate(Vector3.up * turn * turnSpeed * Time.deltaTime);
+        // Key input (no Input Axis problem)
+        if (Input.GetKey(KeyCode.W)) move = 1f;
+        if (Input.GetKey(KeyCode.S)) move = -1f;
+        if (Input.GetKey(KeyCode.A)) turn = -1f;
+        if (Input.GetKey(KeyCode.D)) turn = 1f;
 
-        // Move player
-        Vector3 movement = transform.forward * move * speed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+        // Rotate
+        transform.Rotate(0, turn * turnSpeed * Time.deltaTime, 0);
+
+        // Move
+        Vector3 movement = transform.forward * move * speed;
+        controller.Move(movement * Time.deltaTime);
+    }
+}
+```
+enemy.cs
+```
+using UnityEngine;
+
+public class EnemyAI : MonoBehaviour
+{
+    public Transform player;
+    public float speed = 2f;
+
+    void Update()
+    {
+        if (player == null) return;
+
+        // Move toward player
+        Vector3 direction = (player.position - transform.position).normalized;
+        transform.position += direction * speed * Time.deltaTime;
+
+        // Face player
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
     }
 }
 ```
 ### Output:
-<img width="1055" height="559" alt="image" src="https://github.com/user-attachments/assets/c173720e-ca0c-40ae-b33e-b014d327ad12" />
+<img width="1052" height="561" alt="image" src="https://github.com/user-attachments/assets/98886df3-0c0c-4e61-af2a-e24b2caec23e" />
 
-<img width="1055" height="559" alt="image" src="https://github.com/user-attachments/assets/16202156-d6e3-4ae9-a268-7d0cea9d042c" />
+<img width="1049" height="588" alt="image" src="https://github.com/user-attachments/assets/a66686fc-23b8-4657-9ee5-0709938bd0b2" />
 
 ### Result:
 Thus the game was developed using Unity and adopted basic game logic and user interaction techniques.
